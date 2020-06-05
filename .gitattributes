@@ -3,7 +3,9 @@
 .git*       text export-ignore
 
 *.c            text
+*.cpp		   text
 *.h            text
+*.hpp		   text
 
 *.dll       binary
 
