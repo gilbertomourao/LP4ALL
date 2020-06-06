@@ -1,4 +1,4 @@
-# Como a cadeira funciona ?
+﻿# Como a cadeira funciona ?
 
 Como vocês ja devem saber a cadeira de linguagem de programação possui um alto nivel de reprovação, mas por quê ?
 
@@ -10,13 +10,13 @@ Apesar de em LP a gente aprender sobre a linguagem C, não se enganem, ela não 
 
 As 3 provas de Ari têm o nivel de questões +- parecido. O que diferencia elas é o tipo de conteudo que você vai usar para resolve-las.
 
-prova 1- Sintaxe Básica)
+Prova 1- Sintaxe Básica)
 
 Era pra ser a prova mais facil entre as 3, pois você pode resolver qualquer jeito apenas botando todo o programa na MAIN, no entanto por ter um conteudo "Facil" normalmente o nivel de COMPLEXIDADE da questão é o MAIS ALTO possivel entre as 3 provas. O professor pode cobrar matriz, caça palavras, caça palindromo, etc... 
 Muitos alunos tiram zero na primeira prova por subestimarem o conteudo então não cometam esse erro e estudem MUITO pra ela.
 
 
-prova 2- Ponteiro e função) 
+Prova 2- Ponteiro e função) 
 
 Mesma complexidade que a primeira prova, no entanto o professor costuma cobrar questões um pouco menos complexas (evita colocar questões com matriz).
 Diferente da primeira prova vocês não vão poder resolver a questão de qualquer jeito, vai ser preciso utilizar ponteiro e funções.
