@@ -22,7 +22,7 @@
  * be sure that all members of Linp_Matrix are correct.
  */
 
-LINP_EXPORT typedef struct matrix
+typedef struct matrix
 {
 	char mat[LINP_SIZE][LINP_SIZE];
 	int rows;
@@ -30,13 +30,40 @@ LINP_EXPORT typedef struct matrix
 } Linp_Matrix;
 
 /*buffer related*/
-LINP_EXPORT void readstr(char *);
+LINP_EXPORT void linp__readstr(char *);
 
 /*matrix related*/
-LINP_EXPORT void readmat(Linp_Matrix *, char *);
-LINP_EXPORT void dispmat(Linp_Matrix *, char *);
+LINP_EXPORT void linp__readmat(Linp_Matrix *, char *);
+LINP_EXPORT void linp__dispmat(Linp_Matrix *, char *);
 
 /*wordhunt related*/
-LINP_EXPORT int wordhunt(Linp_Matrix *, char *, const char);
+LINP_EXPORT int linp__wordhunt(Linp_Matrix *, char *, const char);
+
+/**
+ * Implementation of namespace lp
+ *
+ * You still can call the functions using "linp__name", but
+ * with this implementation you can call them by lp.name
+ */
+static const struct
+{
+	/*buffer related*/
+	void (*readstr)(char *);
+
+	/*matrix related*/
+	void (*readmat)(Linp_Matrix *, char *);
+	void (*dispmat)(Linp_Matrix *, char *);
+
+	/*wordhunt related*/
+	int (*wordhunt)(Linp_Matrix *, char *, const char);
+
+} lp = {
+
+	linp__readstr,
+	linp__readmat,
+	linp__dispmat,
+	linp__wordhunt
+
+};
 
 #endif

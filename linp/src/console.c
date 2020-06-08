@@ -6,7 +6,7 @@
 
 /*buffer related*/
 
-void readstr(char *str)
+void linp__readstr(char *str)
 {
 	char *ptr = str, c;
 
@@ -23,7 +23,7 @@ void readstr(char *str)
 
 /*Linp_Matrix related*/
 
-void readmat(Linp_Matrix *array, char *text_file)
+void linp__readmat(Linp_Matrix *array, char *text_file)
 {
 	int i, j, flag, cols = 0;
 	bool eol = false;
@@ -77,7 +77,7 @@ void readmat(Linp_Matrix *array, char *text_file)
 	}
 }
 
-void dispmat(Linp_Matrix *array, char *str)
+void linp__dispmat(Linp_Matrix *array, char *str)
 {
 	int i, j;
 

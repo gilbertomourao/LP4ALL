@@ -9,22 +9,22 @@ int main()
 	int n_words;
 
 	/*2D array*/
-	readmat(&grid,"txt/camomile.txt");
+	lp.readmat(&grid,"txt/camomile.txt");
 
-	dispmat(&grid,"Matriz Principal");
+	lp.dispmat(&grid,"Matriz Principal");
 
-	readstr(word);
+	lp.readstr(word);
 
 	/*Testing wordhunt*/
-	n_words = wordhunt(&grid,word,'@');
+	n_words = lp.wordhunt(&grid,word,'@');
 
-	dispmat(&grid,"Teste wordhunt");
+	lp.dispmat(&grid,"Teste wordhunt");
 
 	printf("\nQuantidade de palavras encontradas: %d\n", n_words);
 
 	/*1D array*/
-	readstr(grid.mat[0]);
-	readstr(word);
+	lp.readstr(grid.mat[0]);
+	lp.readstr(word);
 
 	/*Force 1D*/
 
@@ -32,9 +32,9 @@ int main()
 	grid.rows = 1;
 	grid.cols = strlen(grid.mat[0]);
 
-	n_words = wordhunt(&grid,word,'*');
+	n_words = lp.wordhunt(&grid,word,'*');
 
-	dispmat(&grid,"New string");
+	lp.dispmat(&grid,"New string");
 
 	printf("\nA string %s apareceu %d vez(es).\n", word, n_words);
 

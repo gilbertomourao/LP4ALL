@@ -248,7 +248,7 @@ static int huntdiS(Linp_Matrix *array, char **aux_array, char *aux_word,
  * Performs the wordhunt operation on the array
  */
 
-int wordhunt(Linp_Matrix *array, char *word, const char c)
+int linp__wordhunt(Linp_Matrix *array, char *word, const char c)
 {
 	char **aux_array;
 	int i, j, word_counter = 0;
