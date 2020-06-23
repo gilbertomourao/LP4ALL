@@ -16,7 +16,7 @@
 
 #define LINP_SIZE 100 /*Please, don't change this*/
 /**
- * If you decide to change LINP_SIZE, the console functions can
+ * If you decide to change LINP_SIZE, some input functions can
  * present bad behavior. In this case, it's better to not use 
  * then. The function wordhunt is independent of this macro, but 
  * be sure that all members of Linp_Matrix are correct.
@@ -35,6 +35,11 @@ LINP_EXPORT void linp__readstr(char *);
 /*matrix related*/
 LINP_EXPORT void linp__readmat(Linp_Matrix *, char *);
 LINP_EXPORT void linp__dispmat(Linp_Matrix *, char *);
+LINP_EXPORT void linp__copymat(Linp_Matrix *, Linp_Matrix *);
+LINP_EXPORT void linp__tolowermat(Linp_Matrix *);
+LINP_EXPORT void linp__touppermat(Linp_Matrix *);
+LINP_EXPORT void linp__switchcols(Linp_Matrix *, unsigned, unsigned);
+LINP_EXPORT void linp__switchrows(Linp_Matrix *, unsigned, unsigned);
 
 /*wordhunt related*/
 LINP_EXPORT int linp__wordhunt(Linp_Matrix *, char *, const char);
@@ -53,6 +58,11 @@ static const struct
 	/*matrix related*/
 	void (*readmat)(Linp_Matrix *, char *);
 	void (*dispmat)(Linp_Matrix *, char *);
+	void (*copymat)(Linp_Matrix *, Linp_Matrix *);
+	void (*tolowermat)(Linp_Matrix *);
+	void (*touppermat)(Linp_Matrix *);
+	void (*switchcols)(Linp_Matrix *, unsigned, unsigned);
+	void (*switchrows)(Linp_Matrix *, unsigned, unsigned);
 
 	/*wordhunt related*/
 	int (*wordhunt)(Linp_Matrix *, char *, const char);
@@ -60,8 +70,15 @@ static const struct
 } lp = {
 
 	linp__readstr,
+
 	linp__readmat,
 	linp__dispmat,
+	linp__copymat,
+	linp__tolowermat,
+	linp__touppermat,
+	linp__switchcols,
+	linp__switchrows,
+
 	linp__wordhunt
 
 };
