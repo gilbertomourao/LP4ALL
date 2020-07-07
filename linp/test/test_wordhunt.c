@@ -13,7 +13,7 @@ int main()
 
 	lp.dispmat(&grid,"Matriz Principal");
 
-	lp.readstr(word);
+	input("\n~String: ", "%s", word, .buffer_size=LINP_SIZE);
 
 	/*Testing wordhunt*/
 	n_words = lp.wordhunt(&grid,word,'@');
@@ -23,8 +23,8 @@ int main()
 	printf("\nQuantidade de palavras encontradas: %d\n", n_words);
 
 	/*1D array*/
-	lp.readstr(grid.mat[0]);
-	lp.readstr(word);
+	input("\n~String: ", "%s", grid.mat[0], .buffer_size=LINP_SIZE);
+	input("\n~Sub string: ", "%s", word, .buffer_size=LINP_SIZE);
 
 	/*Force 1D*/
 

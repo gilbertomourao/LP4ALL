@@ -30,7 +30,19 @@ typedef struct matrix
 } Linp_Matrix;
 
 /*buffer related*/
-LINP_EXPORT void linp__readstr(char *);
+typedef struct input_args
+{
+	const char *prompt;
+	const char *str;
+	void *arg; 
+	unsigned buffer_size;
+} input_args;
+
+LINP_EXPORT int input(input_args);
+
+#ifndef linp_EXPORTS
+#define input(...) input((input_args){__VA_ARGS__});
+#endif
 
 /*matrix related*/
 LINP_EXPORT void linp__readmat(Linp_Matrix *, char *);
@@ -53,7 +65,6 @@ LINP_EXPORT int linp__wordhunt(Linp_Matrix *, char *, const char);
 static const struct
 {
 	/*buffer related*/
-	void (*readstr)(char *);
 
 	/*matrix related*/
 	void (*readmat)(Linp_Matrix *, char *);
@@ -68,8 +79,6 @@ static const struct
 	int (*wordhunt)(Linp_Matrix *, char *, const char);
 
 } lp = {
-
-	linp__readstr,
 
 	linp__readmat,
 	linp__dispmat,

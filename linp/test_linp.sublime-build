@@ -1,6 +1,6 @@
 {
 	"cmd":  [
-			 "gcc", "-Wall", "-ansi", "-pedantic-errors", "$file_name", // warnings, only ansi standard
+			 "gcc", "-std=c17", "-Wall", "-pedantic-errors", "$file_name", // warnings, only standard
 			 "-I../include", "-L../lib", "-lliblinp", // include linp
 			 "-o", "${file_base_name}.exe", // create executable
 			 "&&", // concatenates with another command
