@@ -13,5 +13,6 @@ echo Apagando os arquivos objeto...
 del /S /Q *.o
 REM move os arquivos .dll e .lib para a pasta lib
 echo Movendo os arquivos dll e lib...
+mkdir lib
 move linp.dll lib
 move liblinp.lib lib
