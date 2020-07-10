@@ -1,4 +1,4 @@
 *.exe
 *.o
-linp/lib/
+**/.lib/
 Makefile
