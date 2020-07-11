@@ -1,4 +1,4 @@
-#include <linp.h>
+#include <linp/linp.h>
 
 int main()
 {

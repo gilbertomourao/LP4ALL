@@ -1,17 +1,18 @@
 {
 	"cmd":  [
 			 "gcc", "-std=c17", "-Wall", "-pedantic-errors", "$file_name", // warnings, only standard
-			 "-I../include", "-L../lib", "-lliblinp", // include linp
+			 //"-I../include", "-L../lib", "-lliblinp", // include linp
+			 "-lliblinp",
 			 "-o", "${file_base_name}.exe", // create executable
 			 "&&", // concatenates with another command
 			 "start", "cmd", "/k" , "$file_base_name"
 			], // opens cmd and run executable keeping prompt window open
-	
+/*	
 	"env": 
 	{
 		"PATH": "$PATH;../lib"
 	},
-
+*/
 	"selector": "source.c",
 	"working_dir": "${file_path}",
 	"shell": true

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include <linp.h>
+#include <linp/linp.h>
 
 int main()
 {
