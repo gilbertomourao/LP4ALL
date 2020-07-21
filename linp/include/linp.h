@@ -38,7 +38,7 @@ typedef struct input_args
 	unsigned buffer_size;
 } input_args;
 
-LINP_EXPORT int input(input_args);
+LINP_EXPORT void input(input_args);
 
 #ifndef linp_EXPORTS
 #define input(...) input((input_args){__VA_ARGS__});

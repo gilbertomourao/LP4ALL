@@ -12,8 +12,8 @@
 
 /*========================================================================*/
 
-static int kernelInput(const char *prompt, const char *str, void *arg, unsigned buffer_size){
-	/*Read user buffered/file input and stores it in a variable*/
+static void KernelInput(const char *prompt, const char *str, void *arg, unsigned buffer_size){
+	/*Reads user input and stores it in a variable*/
 	
 	/*
 	The line while( (ch = fgetc(stdin)) != EOF && ch != '\n' );
@@ -41,7 +41,6 @@ static int kernelInput(const char *prompt, const char *str, void *arg, unsigned 
 
 	int ch, i = 0, flag = 1;
 	char *string = (char *)arg;
-	int retval = 0;
 
 	/*prompt*/
 	if (!prompt)
@@ -52,53 +51,50 @@ static int kernelInput(const char *prompt, const char *str, void *arg, unsigned 
 	/*Passed first check*/
 
 	/*Verifies if str is a valid input type string*/
-	if (str && str[0] == '%' && arg){
+	if (str && str[0] == '%' && arg)
+	{
 		/*It's valid, then continue and print prompt*/
 		printf("%s", prompt);
-		switch (str[1]){
+		switch (str[1])
+		{
 			case 'u':
 			{
-				retval = fscanf(stdin, "%u", (unsigned int*)arg);
-				while( (ch = fgetc(stdin)) != EOF && ch != '\n' );
-				flag++;
+				flag += fscanf(stdin, "%u", (unsigned int*)arg);
+				while( flag > 1 && (ch = fgetc(stdin)) != EOF && ch != '\n' );
 				break;
 			}
 			case 'd':
 			{
-				retval = fscanf(stdin, "%d", (int *)arg);
-				while( (ch = fgetc(stdin)) != EOF && ch != '\n' );
-				flag++;	
+				flag += fscanf(stdin, "%d", (int *)arg);
+				while( flag > 1 && (ch = fgetc(stdin)) != EOF && ch != '\n' );
 				break;
 			}
 			case 'c':
 			{
-				retval = fscanf(stdin, "%c", (char *)arg);
-				while( (ch = fgetc(stdin)) != EOF && ch != '\n' );
-				flag++;	
+				flag += fscanf(stdin, "%c", (char *)arg);
+				while( flag > 1 && (ch = fgetc(stdin)) != EOF && ch != '\n' );
 				break;
 			}
 			case 'f':
 			{
-				retval = fscanf(stdin, "%f", (float *)arg);
-				while( (ch = fgetc(stdin)) != EOF && ch != '\n' );
-				flag++;
+				flag += fscanf(stdin, "%f", (float *)arg);
+				while( flag > 1 && (ch = fgetc(stdin)) != EOF && ch != '\n' );
 				break;
 			}
 			case 'h':
 			{
-				switch (str[2]){
+				switch (str[2])
+				{
 					case 'd':
 					{
-						retval = fscanf(stdin, "%hd", (short int*)arg);
-						while( (ch = fgetc(stdin)) != EOF && ch != '\n' );
-						flag++;	
+						flag += fscanf(stdin, "%hd", (short int*)arg);
+						while( flag > 1 && (ch = fgetc(stdin)) != EOF && ch != '\n' );	
 						break;
 					}
 					case 'u':
 					{
-						retval = fscanf(stdin, "%hu", (unsigned short int*)arg);
-						while( (ch = fgetc(stdin)) != EOF && ch != '\n' );
-						flag++;
+						flag += fscanf(stdin, "%hu", (unsigned short int*)arg);
+						while( flag > 1 && (ch = fgetc(stdin)) != EOF && ch != '\n' );
 						break;
 					}
 					default:
@@ -107,49 +103,47 @@ static int kernelInput(const char *prompt, const char *str, void *arg, unsigned 
 						exit(EXIT_FAILURE); /*error*/
 					}
 				} /*str[2]*/
+
 				flag++;	
 				break;	
 			}
 			case 'l':
 			{
-				switch (str[2]){
+				switch (str[2])
+				{
 					case 'd':
 					{
-						retval = fscanf(stdin, "%ld", (long int*)arg);
-						while( (ch = fgetc(stdin)) != EOF && ch != '\n' );
-						flag++;
+						flag += fscanf(stdin, "%ld", (long int*)arg);
+						while( flag > 1 && (ch = fgetc(stdin)) != EOF && ch != '\n' );
 						break;
 					}
 					case 'u':
 					{
-						retval = fscanf(stdin, "%lu", (unsigned long int*)arg);
-						while( (ch = fgetc(stdin)) != EOF && ch != '\n' );
-						flag++;
+						flag += fscanf(stdin, "%lu", (unsigned long int*)arg);
+						while( flag > 1 && (ch = fgetc(stdin)) != EOF && ch != '\n' );
 						break;
 					}
 					case 'f':
 					{
-						retval = fscanf(stdin, "%lf", (double*)arg);
-						while( (ch = fgetc(stdin)) != EOF && ch != '\n' );	
-						flag++;
+						flag += fscanf(stdin, "%lf", (double*)arg);
+						while( flag > 1 && (ch = fgetc(stdin)) != EOF && ch != '\n' );
 						break;
 					}
 					#if __STDC_VERSION__ >= 199901L
 					case 'l':
 					{
-						switch (str[3]){
+						switch (str[3])
+						{
 							case 'd':
 							{
-								retval = fscanf(stdin, PRId64, (long long int*)arg);
-								while( (ch = fgetc(stdin)) != EOF && ch != '\n' );
-								flag++;
+								flag += fscanf(stdin, PRId64, (long long int*)arg);
+								while( flag > 1 && (ch = fgetc(stdin)) != EOF && ch != '\n' );
 								break;
 							}
 							case 'u':
 							{
-								retval = fscanf(stdin, PRIu64, (unsigned long long int*)arg);
-								while( (ch = fgetc(stdin)) != EOF && ch != '\n' );
-								flag++;
+								flag += fscanf(stdin, PRIu64, (unsigned long long int*)arg);
+								while( flag > 1 && (ch = fgetc(stdin)) != EOF && ch != '\n' );
 								break;
 							}
 							default:
@@ -158,6 +152,7 @@ static int kernelInput(const char *prompt, const char *str, void *arg, unsigned 
 								exit(EXIT_FAILURE); /*error*/
 							}
 						} /*str[3]*/
+
 						flag++;
 						break;	
 					}
@@ -168,6 +163,7 @@ static int kernelInput(const char *prompt, const char *str, void *arg, unsigned 
 						exit(EXIT_FAILURE);
 					}
 				} /*str[2]*/
+
 				flag++;
 				break;	
 			}
@@ -175,9 +171,8 @@ static int kernelInput(const char *prompt, const char *str, void *arg, unsigned 
 			#ifndef _WIN32
 			case 'L':
 			{
-				retval = fscanf(stdin, "%Lf", (long double*)arg);
-				while( (ch = fgetc(stdin)) != EOF && ch != '\n' );
-				flag++;	
+				flag += fscanf(stdin, "%Lf", (long double*)arg);
+				while( flag > 1 && (ch = fgetc(stdin)) != EOF && ch != '\n' );
 				break;
 			}
 			#endif
@@ -185,7 +180,10 @@ static int kernelInput(const char *prompt, const char *str, void *arg, unsigned 
 			case 's':
 			{
 				/*Read characters from stdin*/
-				fgets(string,buffer_size,stdin);
+				if (!fgets(string,buffer_size,stdin))
+				{
+					break;
+				}
 
 				while(*(string+i) && *(string+i) != '\n'){
 					i++;
@@ -197,26 +195,27 @@ static int kernelInput(const char *prompt, const char *str, void *arg, unsigned 
 					while( (ch = fgetc(stdin)) != EOF && ch != '\n' );
 
 				flag++;
-				retval = 1;
 				break;
 			}
 			default:
 			{
-				printf("\nFailed to read from input.\n");
+				printf("\nERROR: In input. Failed to read from input. Invalid type.\n");
 				exit(EXIT_FAILURE); /*error*/
 			}
 		} /*str[1]*/
-	} else {
-		printf("\nFailed to read from input.\n");
-		exit(EXIT_FAILURE); /*error*/
-	}
-	/*Check if the string type is terminated*/
-	if (str[flag]){
-		printf("\nFailed to read from input.\n");
+	} 
+	else 
+	{
+		printf("\nERROR: In input. Invalid arguments, please check the documentation.\n");
 		exit(EXIT_FAILURE); /*error*/
 	}
 
-	return retval;
+	/*Check if the string type is terminated*/
+	if (str[flag])
+	{
+		printf("\nERROR: In input. Failed to read from input.\n");
+		exit(EXIT_FAILURE); /*error*/
+	}
 }
 
 /*
@@ -229,14 +228,14 @@ typedef struct input_args
 } input_args;
  */
 
-int input(input_args args)
+void input(input_args args)
 {
 	const char *prompt = args.prompt ? args.prompt : NULL;
 	const char *str = args.str ? args.str : NULL;
 	void *arg = args.arg ? args.arg : NULL;
 	unsigned buffer_size = args.buffer_size ? args.buffer_size : 100;
 
-	return kernelInput(prompt, str, arg, buffer_size);
+	KernelInput(prompt, str, arg, buffer_size);
 }
 
 /*Linp_Matrix related*/
