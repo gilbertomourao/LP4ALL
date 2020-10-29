@@ -102,6 +102,7 @@ void mostra (char *mat,int *L,int *C){
 void palihunt (char *mat,int *L,int *C){
 	
 	int i,j,k,l,m,n,o;
+	int kaux, laux, maux; /*fixed*/
 	char mat_aux[MAX][MAX], string[MAX];
 	
 	/*Matriz auxiliar*/
@@ -169,10 +170,10 @@ void palihunt (char *mat,int *L,int *C){
 						if (strpal(string)){
 							if (tolower(mat_aux[m][n]) >= 'a' && tolower(mat_aux[m][n]) <= 'z')
 								printf("O palindromo %s aparece na diagonal P entre [%d][%d] e [%d][%d].\n",string,k+1,l+1,m+1,n+1);
-							for (k = k,l = l,m = 0; k < *L && l < *C; k++, l++, m++)
-								if (mat_aux[k][l] == string[m])
-									*(mat + k*MAX + l) = '*';
-								else m--; 	
+							for (kaux = k,laux = l,maux = 0; kaux < *L && laux < *C; kaux++, laux++, maux++)
+								if (mat_aux[kaux][laux] == string[maux])
+									*(mat + kaux*MAX + laux) = '*';
+								else maux--; 	
 						}
 					}
 				}
@@ -194,10 +195,10 @@ void palihunt (char *mat,int *L,int *C){
 						if (strpal(string)){
 							if (tolower(mat_aux[m][n]) >= 'a' && tolower(mat_aux[m][n]) <= 'z')
 								printf("O palindromo %s aparece na diagonal S entre [%d][%d] e [%d][%d].\n",string,k+1,l+1,m+1,n+1);
-							for (k = k,l = l,m = 0; k < *L && l < *C; k++, l--, m++)
-								if (mat_aux[k][l] == string[m])
-									*(mat + k*MAX + l) = '*';
-								else m--;
+							for (kaux = k,laux = l,maux = 0; kaux < *L && laux < *C; kaux++, laux--, maux++)
+								if (mat_aux[kaux][laux] == string[maux])
+									*(mat + kaux*MAX + laux) = '*';
+								else maux--;
 						}
 					}	
 				}
