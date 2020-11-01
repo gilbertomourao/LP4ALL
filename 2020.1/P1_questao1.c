@@ -9,7 +9,7 @@ int main()
 
 	lp.dispmat(&grid, "Matriz de Entrada");
 
-	lp.palihunt(&grid, "true", "rows", '*');
+	lp.palihunt(&grid, "print", "rows", '*');
 	/**
 	 * Para a turma b, basta substituir rows por cols no terceiro argumento
 	 */

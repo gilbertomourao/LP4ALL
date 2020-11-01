@@ -441,13 +441,13 @@ void linp__palihunt(Linp_Matrix *array, char *print, char *search, const char c)
 	}
 
 	/*Verifica a validade dos parâmetros print e search*/
-	int print_true = strcmp(print, "true");
-	int print_false = strcmp(print, "false");
+	int print_true = strcmp(print, "print");
+	int print_false = strcmp(print, "don't print");
 	int search_valid = 0;
 
 	if (print_true && print_false)
 	{
-		printf("ERROR: In palihunt. The parameter print can only accept the strings ""true"" or ""false"".\n");
+		printf("ERROR: In palihunt. The parameter print can only accept the strings \"print\" or \"don't print\".\n");
 		exit(EXIT_FAILURE);
 	}
 
