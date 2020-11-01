@@ -55,6 +55,7 @@ LINP_EXPORT void linp__switchrows(Linp_Matrix *, unsigned, unsigned);
 
 /*wordhunt related*/
 LINP_EXPORT int linp__wordhunt(Linp_Matrix *, char *, const char);
+LINP_EXPORT void linp__palihunt(Linp_Matrix *, char *, char *, const char);
 
 /**
  * Implementation of namespace lp
@@ -77,6 +78,7 @@ static const struct
 
 	/*wordhunt related*/
 	int (*wordhunt)(Linp_Matrix *, char *, const char);
+	void (*palihunt)(Linp_Matrix *, char *, char *, const char);
 
 } lp = {
 
@@ -88,7 +90,8 @@ static const struct
 	linp__switchcols,
 	linp__switchrows,
 
-	linp__wordhunt
+	linp__wordhunt,
+	linp__palihunt
 
 };
 

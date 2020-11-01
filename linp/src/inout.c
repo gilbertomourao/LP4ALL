@@ -309,4 +309,6 @@ void linp__dispmat(Linp_Matrix *array, char *str)
 
 		putchar('\n');
 	}
+
+	putchar('\n');
 }

@@ -49,6 +49,7 @@ Na tabela abaixo, leia matriz e entenda Linp_Matrix, o tipo padrão de matriz da
 | switchcols | Troca as colunas da matriz passadas como parâmetro. |
 | switchrows | Troca as linhas da matriz passadas como parâmetro. |
 | wordhunt | Busca, na matriz, a string fornecida e retorna a quantidade de ocorrências. Substitui as ocorrências pelo caractere fornecido. |
+| palihunt | Busca por palíndromos na matriz e substitui as ocorrências pelo caractere fornecido. É possível indicar qual a direção da procura (linha, coluna, diagP, diagS). Há a opção de imprimir na tela as posições inicial e final onde os palíndromos foram encontrados. |
 
 | Macro | Descrição |
 | --- | --- |
