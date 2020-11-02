@@ -130,7 +130,7 @@ static void palisearch(Linp_Matrix *array, char **aux_array,
 	palindrome[0] = '\0';
 	s = 0;
 
-	/*Verifica se o caractere atual é alfabético*/
+	/*Verifica se o caractere atual é alfanumérico*/
 	if (VALID_CHAR(aux_array[pos_i][pos_j]))
 	{
 		/*Adiciona o caractere à primeira posição da string*/
@@ -144,7 +144,7 @@ static void palisearch(Linp_Matrix *array, char **aux_array,
 		 * pode ajudar na compreensão.
 		 *
 		 * Exemplo de procura:
-		 * _ = qualquer caractere não alfabético (ex: 1, @, &)
+		 * _ = qualquer caractere não alfanumérico (ex: +, @, &)
 		 * 
 		 * a_Ra__rA_x
 		 *
