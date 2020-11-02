@@ -434,7 +434,7 @@ void linp__palihunt(Linp_Matrix *array, char *print, char *search, const char c)
 	/* palindrome */
 	palindrome = malloc(string_length * sizeof(char));
 
-	if (string == NULL)
+	if (palindrome == NULL)
 	{
 		printf("ERROR: In palihunt. Memory allocation failed.\n Variable: palindrome\n");
 		exit(EXIT_FAILURE);

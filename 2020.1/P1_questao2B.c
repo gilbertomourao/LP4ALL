@@ -12,7 +12,7 @@ int main()
 
 	lp.dispmat(&grid, "Matriz de Entrada");
 
-	/*Turma A*/
+	/*Turma B*/
 
 	int i, j, k;
 	char aux; /*Para realizar a troca*/
