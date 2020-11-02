@@ -5,7 +5,7 @@
 
 #include "../include/linp.h"
 
-#define VALID_CHAR(ch) (tolower(ch) >= 'a' && tolower(ch) <= 'z')
+#define VALID_CHAR(ch) ((tolower(ch) >= 'a' && tolower(ch) <= 'z') || (ch >= '1' && ch <= '9') )
 
 /**
  * strpal

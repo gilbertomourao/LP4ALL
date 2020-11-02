@@ -9,6 +9,9 @@ int main()
 
 	lp.dispmat(&grid, "Matriz de Entrada");
 
+	/**
+	 * Ver código fonte da função palihunt em linp/src/palihunt.c
+	 */
 	lp.palihunt(&grid, "print", "rows", '*');
 	/**
 	 * Para a turma b, basta substituir rows por cols no terceiro argumento

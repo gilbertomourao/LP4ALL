@@ -1,8 +1,8 @@
 Ar a  Ra
-R r  ra 
+R r 2ra 
 a xa r x
 r b A xc
-  X  X  
-  R   X 
+  X  X 1
+  R49 X 
 xa a N a
 aN a N x
