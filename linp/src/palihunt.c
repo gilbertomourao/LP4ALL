@@ -44,7 +44,7 @@ static int strpal(char *string)
 }
 
 /**
- * get_lowmat
+ * get_auxmat
  *
  * Função que obtém a matriz auxiliar. É necessária pois 
  * na matriz principal as ocorrências serão substituídas 
@@ -228,10 +228,13 @@ static void huntrow(Linp_Matrix *array, char **aux_array, char *string, char *pa
 					printf("O palindromo %s aparece na linha %d entre [%d][%d] e [%d][%d].\n",palindrome,i,i,j,i,end_j);
 
 				/*Faz a substituição pelo caractere fornecido*/
-				for (k = j,l = 0;k <= end_j;k++,l++)
-					if (aux_array[i][k] == palindrome[l])
-						array->mat[i][k] = c;
-					else l--;
+				if (c)
+				{
+					for (k = j,l = 0;k <= end_j;k++,l++)
+						if (aux_array[i][k] == palindrome[l])
+							array->mat[i][k] = c;
+						else l--;
+				}
 
 				/*Salva a posição final do palíndromo*/
 				last_end = end_j;
@@ -268,10 +271,13 @@ static void huntcol(Linp_Matrix *array, char **aux_array, char *string, char *pa
 					printf("O palindromo %s aparece na coluna %d entre [%d][%d] e [%d][%d].\n",palindrome,j,i,j,end_i,j);
 				
 				/*Faz a substituição pelo caractere fornecido*/
-				for (k = i,l = 0;k <= end_i;k++,l++)
-					if (aux_array[k][j] == string[l])
-						array->mat[k][j] = c;
-					else l--; 
+				if (c)
+				{
+					for (k = i,l = 0;k <= end_i;k++,l++)
+						if (aux_array[k][j] == string[l])
+							array->mat[k][j] = c;
+						else l--; 
+				}
 
 				/*Salva a posição final do palíndromo*/
 				last_end = end_i;
@@ -313,10 +319,13 @@ static void huntdiP(Linp_Matrix *array, char **aux_array, char *string, char *pa
 						printf("O palindromo %s aparece na diagonal P entre [%d][%d] e [%d][%d].\n",palindrome,k,l,end_i,end_j);
 					
 					/*Faz a substituição pelo caractere fornecido*/
-					for (kaux = k,laux = l,maux = 0; kaux <= end_i && laux <= end_j ; kaux++, laux++, maux++)
-						if (aux_array[kaux][laux] == string[maux])
-							array->mat[kaux][laux] = c;
-						else maux--;
+					if (c)
+					{
+						for (kaux = k,laux = l,maux = 0; kaux <= end_i && laux <= end_j ; kaux++, laux++, maux++)
+							if (aux_array[kaux][laux] == string[maux])
+								array->mat[kaux][laux] = c;
+							else maux--;
+					}
 
 					/*Salva a posição final do palíndromo*/
 					last_end_i = end_i;
@@ -361,10 +370,13 @@ static void huntdiS(Linp_Matrix *array, char **aux_array, char *string, char *pa
 						printf("O palindromo %s aparece na diagonal S entre [%d][%d] e [%d][%d].\n",palindrome,k,l,end_i,end_j);
 					
 					/*Faz a substituição pelo caractere fornecido*/
-					for (kaux = k,laux = l,maux = 0; kaux <= end_i && laux >= end_j ; kaux++, laux--, maux++)
-						if (aux_array[kaux][laux] == string[maux])
-							array->mat[kaux][laux] = c;
-						else maux--;
+					if (c)
+					{
+						for (kaux = k,laux = l,maux = 0; kaux <= end_i && laux >= end_j ; kaux++, laux--, maux++)
+							if (aux_array[kaux][laux] == string[maux])
+								array->mat[kaux][laux] = c;
+							else maux--;
+					}
 
 					/*Salva a posição final do palíndromo*/
 					last_end_i = end_i;
@@ -387,7 +399,7 @@ static void huntdiS(Linp_Matrix *array, char **aux_array, char *string, char *pa
  * Caso seja "false", apenas procura por palíndromos sem imprimir nada.
  * O parâmetro search permite que o usuário indique se quer buscar por palíndromos 
  * somente nas linhas, somente nas colunas, somente nas diagonais P, somente nas diagonais S 
- * ou em todas as direções. 
+ * ou em todas as direções. Se o parâmetro c for 0 ou '\0', não substitui as ocorrências.
  * 
  */
 void linp__palihunt(Linp_Matrix *array, char *print, char *search, const char c)
