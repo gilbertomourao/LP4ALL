@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1606920068 source:c:\users\jessica\desktop\linguagem de programação 2.0\prova 2\p2_2017.2\questão2.1\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<conio.h>
+	<string.h>
+	<stdbool.h>
+

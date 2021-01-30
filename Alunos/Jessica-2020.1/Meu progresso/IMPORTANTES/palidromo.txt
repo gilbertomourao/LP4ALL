@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<string.h>
+
+int main()
+{
+    /*Verificar se a palavra é um palídromo*/
+    char palavra[100];
+    char palavraM[100], invertida[100];
+    int palidromo=0;
+    int tam2=0;
+	int i,j,k;
+	printf("Insira a palavra: ");
+    gets(palavra);
+
+    /*Descobrir o tamanho das strings de entrada*/
+    while(palavra[tam2]!='\0') ++tam2;//Tamanho da palavra
+
+    /*Tirando Case-sensitive*/
+     for(i=0;palavra[i]!='\0';++i){ //Passando palavra para auxiliar
+        palavraM[i]=palavra[i];
+     }
+    palavraM[i]='\0';
+    for(j=0;palavraM[j]!='\0';++j){ //Transforma todas as letras em maiusculas
+          if (palavraM[j] >= 'a' &&  palavraM[j] <= 'z')
+             palavraM[j] = palavraM[j] - 'a' + 'A';
+    }
+
+    j=0;
+    for(i = tam2; i >= 0; i--){ //passando a palavra na ordem inversa p/ string auxiliar
+        if (palavraM[i] != '\0'){
+            printf("%c", palavraM[i]);
+            invertida[j] = palavraM[i];
+            ++j;
+        }
+    }
+    invertida [j] = '\0';
+    i=0;
+    while (palavraM[i]==invertida[i] && palavraM[i]!='\0' && invertida[i]!='\0') ++i; //Percorre as duas comparando-as
+
+    if(palavraM[i]=='\0' && invertida[i]=='\0'){ // Indica ao usuario quando as duas strings sao iguais
+       palidromo=1;
+    }
+
+
+   if(palidromo == 1)
+         printf("\n\nPALIDROMO\n\n");
+    else
+        printf("\n\nNAO E PALIDROMO\n\n");
+
+    return 0;
+}

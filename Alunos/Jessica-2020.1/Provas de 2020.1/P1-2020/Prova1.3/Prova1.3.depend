@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1603984451 source:c:\users\jessica\desktop\linguagem de programação 2.0\prova1.3\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+

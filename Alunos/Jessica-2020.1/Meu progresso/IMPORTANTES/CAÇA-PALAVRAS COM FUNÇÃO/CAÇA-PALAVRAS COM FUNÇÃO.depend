@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1604970244 source:c:\users\jessica\desktop\linguagem de programaÁ„o 2.0\meu progresso\importantes\ca«a-palavras com fun«√o\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	<conio.h>
+	<string.h>
+	<stdbool.h>
+

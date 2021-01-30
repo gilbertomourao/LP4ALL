@@ -1,0 +1,26 @@
+FUNÇÃO PARA LER APENAS UM DIGITO COM PONTEIRO:
+
+/*LER APENAS NUMEROS NUMA VARIAVEL INTEIRA*/
+void ReadNumber(int *numero) {
+    char ch; //Capta cada caractere digitado
+    char digitado[2]; //Junta todos os digitos digitados
+    int i=0;
+    while (1) {
+            fflush(stdin); //Limpa o buffer
+            ch = getch(); //Captura o caractere digitado pelo usuario;
+            if (isdigit(ch) && i<1) { // Se for um numero
+                digitado[i]=ch; //É direcionado para string de numeros
+                i++; //Passqa para proxima posição
+                printf("%c", ch); //Exibe o numero digitado na tela
+            } else if (ch==8 && i) { //Se o Blackspace for digitado e tiver caractere para apagar
+                i--;
+                printf("\b \b"); //Apaga o caractere anterior
+            } else if (ch==13 && i) {  // Quando o ENTER for digitado e tiver caractere
+                digitado[i] = '\0'; //Finaliza a string
+                break; // Termina o loop
+            }
+        }
+        *numero = atoi(digitado); // Converte a string em inteiros e passa para pomteiro
+}
+
+

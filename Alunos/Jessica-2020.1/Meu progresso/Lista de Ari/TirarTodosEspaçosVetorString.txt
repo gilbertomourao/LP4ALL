@@ -1,0 +1,17 @@
+TIRANDO TODOS OS ESPAÇOS DE UM VETOR DE STRINGS 
+
+/*for(i=0; i<membros; i++){ //Tirando os espaços da lista auxiliar
+        tam=0;
+        tam=strlen(lista_aux[i]); //Verifica o tamanho da string do vetor que vai ser verificada no momento
+        for(j=0; j<tam; j++){
+            if (lista_aux[i][j]==' '){ //Se encontrar um espaço
+                aux++; //Soma uma ocorrencia do espaço
+                for(k=j; k<tam; k++){
+                    lista_aux[i][k]=lista_aux[i][k+1]; //Retira o espaço
+                }
+               j--; //Volta em 1 a variável de controle para a retirada de espaços consecutivos
+            }
+        }
+        lista_aux[i][tam-aux]='\0'; //Relocaliza o delimitador da string de acordo com a quantidade de espaços retirados
+        aux=0;
+    }*/

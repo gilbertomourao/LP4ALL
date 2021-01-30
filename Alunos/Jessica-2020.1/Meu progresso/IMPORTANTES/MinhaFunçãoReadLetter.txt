@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<ctype.h>
+#include<conio.h>
+
+int main()
+{
+    char ReadLetter(void);
+    char UnicaLetra;
+
+    printf("\n\n\nIsira uma letra e depois enter:\n");
+    UnicaLetra= ReadLetter();
+    printf("\n\n\nA letra digitada sem enter foi: %c \n", UnicaLetra);
+
+    return 0;
+}
+
+// FINAL -> ENTER SO FUNCIONA MEDIANTE A ENTRADA DE UMA LETRA ANTES
+char ReadLetter(void) {
+	char ch; //Capta cada caractere digitado
+	char digitado[2]; //Junta letra e enter
+	int i = 0;
+
+	while (1) {
+		fflush(stdin); //Limpa o buffer
+		ch = _getch(); //Captura o caractere digitado pelo usuario;
+
+		if (isalpha(ch) != 0  && i < 1) { // Se for uma letra e estiver dentro do tamanho
+			digitado[i] = ch; // É direcionado para string auxilar
+			i++; //Passa para proxima posição
+			printf("%c", ch); //Exibe letra ou numero digitado na tela
+
+		}
+		else if (ch == 8 && i==1) { //Se o Blackspace for digitado e tiver letra para apagar na posição 0 da string
+			i--;
+			digitado[i] = '\0';
+			printf("\b \b"); //Apaga o caractere anterior
+
+		} else if (ch==13 && i==1) // Quando o ENTER for digitado e tiver letra na posição 0 da string, termina o loop
+            break;
+	}
+	digitado[i] = '\0'; //Finaliza a string
+
+	 return digitado[0];
+}

@@ -1,0 +1,11 @@
+FUNÇÃO PARA CONVERTER MATRIZ PARA MINUSCULA COM PONTEIROS:
+
+#define ToLow(ch) ( (ch >= 'A' && ch <= 'Z') ? ch + 'a' - 'A' : ch ) // Ignora case sensitive
+
+/*CONVERTE TODA MATRIZ EM LETRAS MINUSCULAS*/
+void TransformarMatrizEmMinuscula(char *mat, int *L, int *C) {
+     for (int i=0; i<*L; i++)
+        for(int j=0; j<*C; j++)
+            *(mat+i*MAX+j) = ToLow(*(mat+i*MAX+j));
+
+}

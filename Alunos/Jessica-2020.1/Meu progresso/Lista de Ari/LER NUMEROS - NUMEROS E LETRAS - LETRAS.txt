@@ -1,0 +1,122 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<conio.h>
+#include<ctype.h>
+
+/*LER APENAS NUMEROS NUMA VARIAVEL INTEIRA*/
+int ReadNumbers(void){
+    char ch; //Capta cada caractere digitado
+    char digitado[50]; //Junta todos os digitos digitados
+    int i=0;
+    int numero; //Recebe o numero final
+
+    do{
+            fflush(stdin); //Limpa o buffer
+            ch = getch( ); //Captura o caractere digitado pelo usuario;
+
+            if (isdigit(ch) != 0) { // Se for um numero
+                digitado[i]=ch; //É direcionado para string de numeros
+                i++; //Passqa para proxima posição
+                printf("%c", ch); //Exibe o numero digitado na tela
+
+            } else if (ch == 8 && i) { //Se o Blackspace for digitado e tiver caractere para apagar
+                digitado[i] = '\0';
+                i--;
+                printf("\b \b"); //Apaga o caractere anterior
+            }
+        } while(ch != 13); // Quando o ENTER for digitado, termina o loop
+
+        digitado[i] = '\0'; //Finaliza a string finalmente
+        numero = atoi(digitado); // Converte a string em inteiros e passa para variavel numero
+
+        return numero; // Retorna o numero inteiro
+}
+
+/* LER APENAS LETRAS NUMA STRING*/
+void ReadLetters(char string[]){
+    char ch; //Capta cada caractere digitado
+    char digitado[50]; //Junta todos as letras digitadas
+    int i=0, j;
+
+    do{
+        fflush(stdin); //Limpa o buffer
+        ch = getch( ); //Captura o caractere digitado pelo usuario;
+
+        if ( isalpha(ch) != 0 || ch == 32 ) { // Se for uma letra ou espaço
+            digitado[i]=ch; //É direcionado para string de letras
+            i++; //Passa para proxima posição
+            printf("%c", ch); //Exibe letra ou espaço digitado na tela
+
+        } else if (ch == 8 && i) { //Se o Blackspace for digitado e tiver caractere para apagar
+            digitado[i] = '\0';
+            i--;
+            printf("\b \b"); //Apaga o caractere anterior
+        }
+    } while(ch != 13); // Quando o ENTER for digitado, termina o loop
+
+    digitado[i] = '\0'; //Finaliza a string
+
+    for(j=0; digitado[j]!='\0'; j++){
+        string[j]= digitado[j];
+    }
+    string [j] = '\0';
+
+}
+
+/*LER LETRAS ESPACO E NUMEROS*/
+
+void ReadLettersAndNumbers(char string[]){
+    char ch; //Capta cada caractere digitado
+    char digitado[50]; //Junta todos as letras digitadas
+    int i=0, j;
+
+    do{
+        fflush(stdin); //Limpa o buffer
+        ch = getch( ); //Captura o caractere digitado pelo usuario;
+
+        if ( isalpha(ch) != 0 || ch == 32 || isdigit(ch) != 0 ) { // Se for uma letra ou espaço ou numeros
+            digitado[i] = ch; // É direcionado para string auxilar
+            i++; //Passa para proxima posição
+            printf("%c", ch); //Exibe letra ou espaço ou numero digitado na tela
+
+        } else if (ch == 8 && i) { //Se o Blackspace for digitado e tiver caractere para apagar
+            digitado[i] = '\0';
+            i--;
+            printf("\b \b"); //Apaga o caractere anterior
+        }
+    } while(ch != 13); // Quando o ENTER for digitado, termina o loop
+
+    digitado[i] = '\0'; //Finaliza a string
+
+    for(j=0; digitado[j]!='\0'; j++){
+        string[j]= digitado[j];
+    }
+    string [j] = '\0';
+
+}
+
+/*LER APENAS LETRAS NUMA STRING COM PONTEIROS*/
+void ReadLetters(char *s) {
+    char ch; //Capta cada caractere digitado
+    int i=0, j;
+    do{
+        fflush(stdin); // Limpa o buffer
+        ch = getch(); // Captura o caractere digitado pelo usuario;
+        if ( (isalpha(ch) || ch ==' ') && i<15 ) { // Se for uma letra ou espaço
+            *(s+i)=ch; // É direcionado para string de letras
+            ++i; // Passa para proxima posição
+            printf("%c", ch); // Exibe letra ou espaço digitado na tela
+        } else if (ch == 8 && i) { //Se o Blackspace for digitado e tiver caractere para apagar
+            --i;
+            *(s+i) = '\0';
+            printf("\b \b"); //Apaga o caractere anterior
+        }
+    } while(ch != '\n'); // Quando o ENTER for digitado, termina o loop
+    *(s+i) = '\0'; // Finaliza a string
+}
+#include <conio.h>
+#include <ctype.h>
+
+
+
+

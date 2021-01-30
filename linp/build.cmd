@@ -17,7 +17,7 @@ if not exist %mingw_path% (
 
 rem -----------------------------------------------------------------------------------
 
-set include_path=%mingw_path%\include\linp\
+set include_path=%mingw_path%\x86_64-w64-mingw32\include\linp\
 set lib_path=%mingw_path%\lib
 set dll_path=%mingw_path%\bin
 
@@ -45,8 +45,8 @@ echo Movendo os arquivos dll e lib...
 mkdir lib
 move linp.dll lib
 move liblinp.lib lib
-copy lib/linp.dll %lib_path%
-copy lib/liblinp.lib %dll_path%
+copy lib\linp.dll %dll_path%
+copy lib\liblinp.lib %lib_path%
 xcopy include %include_path% /Y
 
 rem -----------------------------------------------------------------------------------
