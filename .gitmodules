@@ -1,0 +1,3 @@
+[submodule "linp"]
+	path = linp
+	url = https://github.com/gilbertomourao/linp
