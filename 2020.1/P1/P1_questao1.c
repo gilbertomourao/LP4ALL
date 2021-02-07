@@ -21,7 +21,9 @@ int main()
 	/**
 	 * Para a turma b, basta substituir linhas por colunas no terceiro argumento
 	 */
-	
+
+	lp.dispmat(dst, "Matriz com Palindromos Identificados");
+
 	Linp_Word *varre = palindromos[0];
 	while (varre)
 	{
@@ -30,14 +32,12 @@ int main()
 		varre = varre->next;
 	}
 
-	lp.dispmat(dst, "Matriz com Palindromos Identificados");
-
 	/**
 	 * Libera a memória previamente alocada
 	 */
 	lp.destruirmat(src);
 	lp.destruirmat(dst);
-	lp.destruirword(palindromos[0]);
+	lp.destruirword(palindromos, 1);
 
 	return 0;
 }
