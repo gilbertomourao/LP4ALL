@@ -19,7 +19,7 @@ int main()
 	 */
 	lp.procpali(src, dst, &palindromos, "linhas", " ", true);
 	/**
-	 * Para a turma b, basta substituir linhas por colunas no terceiro argumento
+	 * Para a turma b, basta substituir linhas por colunas no quarto argumento
 	 */
 
 	lp.dispmat(dst, "Matriz com Palindromos Identificados");
