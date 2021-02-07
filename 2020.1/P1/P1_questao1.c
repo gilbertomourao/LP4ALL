@@ -1,23 +1,43 @@
+/**
+ * Caça-Palíndromos ignorando espaço (faz mais sentido do que não ignorar)
+ */
+
 #include <stdio.h>
-#include <linp/linp.h>
+#include <linp.h>
 
 int main()
 {
-	Linp_Matrix grid;
+	Linp_Mat *src = lp.criarmat(100,100);
+	Linp_Mat *dst = lp.criarmat(100,100);
+	Linp_Word **palindromos;
 
-	lp.readmat(&grid, "matriz_P1.txt");
-
-	lp.dispmat(&grid, "Matriz de Entrada");
+	lp.lerarquivo(src, "matriz_P1.txt");
+	lp.dispmat(src, "Matriz de Entrada");
 
 	/**
-	 * Ver código fonte da função palihunt em linp/src/palihunt.c
+	 * Ver código fonte da função procpali em linp/src/proc.c
 	 */
-	lp.palihunt(&grid, "print", "rows", '*');
+	lp.procpali(src, dst, &palindromos, "linhas", " ", true);
 	/**
-	 * Para a turma b, basta substituir rows por cols no terceiro argumento
+	 * Para a turma b, basta substituir linhas por colunas no terceiro argumento
 	 */
+	
+	Linp_Word *varre = palindromos[0];
+	while (varre)
+	{
+		printf("Palindromo encontrado: %s, entre [%u][%u] e [%u][%u]\n", varre->word, 
+			   varre->y0, varre->x0, varre->y1, varre->x1);
+		varre = varre->next;
+	}
 
-	lp.dispmat(&grid, "Matriz com Palindromos Identificados");
+	lp.dispmat(dst, "Matriz com Palindromos Identificados");
+
+	/**
+	 * Libera a memória previamente alocada
+	 */
+	lp.destruirmat(src);
+	lp.destruirmat(dst);
+	lp.destruirword(palindromos[0]);
 
 	return 0;
 }
