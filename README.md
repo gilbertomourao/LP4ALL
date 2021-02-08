@@ -67,7 +67,7 @@ Quando terminar, verifique se tudo ocorreu bem. Execute o comando git status nov
 git push -u origin master
 ```
 
-Pronto! Você tornou-se um colaborador oficial de LP4ALL.
+Pronto! Você se tornou um colaborador oficial de LP4ALL.
 
 ### Desejo colaborar com LINP. O que fazer?
 
