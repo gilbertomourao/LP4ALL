@@ -9,10 +9,12 @@
 #define MAX_SIZE 100
 
 void invstr(char *);
-void substitui(Linp_Mat *, char *);
+void substitui(Linp_Mat *, char *, Linp_Word *);
 
 int main()
 {
+	lp.start();
+
 	Linp_Mat *str1 = lp.criarmat(1, MAX_SIZE);
 	Linp_Mat *dst = lp.criarmat(1, MAX_SIZE);
 	char str2[MAX_SIZE];
@@ -36,12 +38,13 @@ int main()
 	 * dst irá armazenar str1 com as ocorrências de 
 	 * str2 destacadas.
 	 */
-	lp.procstr(str1, dst, NULL, str2, "linhas", "", false);
+	Linp_Word **palavras;
+	lp.procstr(str1, dst, &palavras, str2, "linhas", "", false);
 
 	lp.dispmat(dst, "Ocorrencias: ");
 
 	invstr(str2);
-	substitui(dst, str2);
+	substitui(dst, str2, palavras[0]);
 
 	lp.dispmat(dst, "Resposta: ");
 
@@ -57,8 +60,7 @@ int main()
 	printf("String resposta: %s\n", ptr);
 
 	/* Libera a memória previamente alocada */
-	lp.destruirmat(str1);
-	lp.destruirmat(dst);
+	lp.stop();
 
 	return 0;
 }
@@ -85,20 +87,28 @@ void invstr(char *str)
  * Função que substitui as ocorrências pela 
  * string invertida
  */
-void substitui(Linp_Mat *str1, char *strinv)
+void substitui(Linp_Mat *str1, char *strinv, Linp_Word *palavras)
 {
 	unsigned i, j;
-
-	for (i = 0; i < str1->cols; i++)
+	Linp_Word *temp = palavras;
+	while(temp)
 	{
-		if (str1->data[0][i] != (char) 250)
+		/**
+		 * Estou supondo que a palavra invertida não deve 
+		 * ser considerada como uma ocorrência.
+		 */
+		if (temp->x0 > temp->x1) /* palavra invertida */
 		{
-			for (j = 0; strinv[j]; j++, i++)
-			{
-				str1->data[0][i] = strinv[j];
-			}
-			--i; /* Ajusta o valor de i */
+			printf("I'm here!\n");
+			for (j = temp->x1; j <= temp->x0; j++)
+				str1->data[0][j] = (char) 250;
+		} 
+		else
+		{
+			for (j = temp->x0; j <= temp->x1; j++)
+				str1->data[0][j] = strinv[j - temp->x0];
 		}
+		temp = temp->next;
 	}
 
 	/* O professor pediu para substituir por '*', nesse caso... */

@@ -8,6 +8,8 @@ void transforma(Linp_Mat *);
 
 int main()
 {
+	lp.start();
+
 	Linp_Mat *mat = lp.criarmat(100, 100);
 
 	lp.lerarquivo(mat, "matriz.txt");
@@ -16,7 +18,7 @@ int main()
 	transforma(mat);
 	lp.dispmat(mat, "Matriz Transformada");
 
-	lp.destruirmat(mat);
+	lp.stop();
 
 	return 0;
 }

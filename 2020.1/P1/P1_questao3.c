@@ -3,6 +3,8 @@
 
 int main()
 {
+	lp.start();
+	
 	Linp_Mat *grid = lp.criarmat(100,100);
 
 	lp.lerarquivo(grid, "matriz_P1.txt");
@@ -24,7 +26,7 @@ int main()
 
 	lp.dispmat(grid, "Matriz com maiuscula <-> minuscula");
 
-	lp.destruirmat(grid);
+	lp.stop();
 
 	return 0;
 }
