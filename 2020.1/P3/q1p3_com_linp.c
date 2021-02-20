@@ -99,7 +99,6 @@ void substitui(Linp_Mat *str1, char *strinv, Linp_Word *palavras)
 		 */
 		if (temp->x0 > temp->x1) /* palavra invertida */
 		{
-			printf("I'm here!\n");
 			for (j = temp->x1; j <= temp->x0; j++)
 				str1->data[0][j] = (char) 250;
 		} 
