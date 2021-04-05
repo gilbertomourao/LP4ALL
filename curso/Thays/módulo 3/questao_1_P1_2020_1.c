@@ -72,6 +72,10 @@ int main()
 		}
 		putchar('\n');
 	}
+
+	printf("\n================================================\n"
+		   "              Palindromos Identificados             " 
+		   "\n================================================\n");
 	
 	/**
 	 * Código anterior: string_palindromo
@@ -88,6 +92,7 @@ int main()
 		 * isso seria feito facilmente através de uma função.
 		 */
 		char straux[MAX];
+		char palindromo[MAX]; /* Para imprimir o palindromo identificado */
 		int inicio = 0, fim = 0;
 		int ii, io, ik; /* iteradores */
 
@@ -97,6 +102,7 @@ int main()
 			{
 				/* Início do algoritmo */
 				straux[0] = TOLOWER(mat[i][ii]);
+				int flag = 0;
 
 				for (io = ii + 1, ik = 1; mat[i][io] != '\0'; io++, ik++)
 				{
@@ -125,24 +131,32 @@ int main()
 						}
 					}
 
-					if (thays != 0)
+					if (thays != 0 && io > fim && mat[i][io] != ' ')
 					{
 						/*Significa que é um palíndromo válido*/
+						flag = 1;
 						/**
 						 * Poderia verificar Arara_ --> Arara
 						 */
-						if (io > fim && mat[i][io] != ' ')
-						{
-							inicio = ii;
-							fim = io;
+						
+						inicio = ii;
+						fim = io;
 
-							int i_resp;
-							for (i_resp = inicio; i_resp <= fim; i_resp++)
-							{
-								mat_resp[i][i_resp] = mat[i][i_resp];
-							}
+						int i_resp;
+						for (i_resp = inicio; i_resp <= fim; i_resp++)
+						{
+							mat_resp[i][i_resp] = mat[i][i_resp];
+							palindromo[i_resp - inicio] = mat[i][i_resp];
 						}
+						palindromo[i_resp - inicio] = '\0';
+						
 					}
+				}
+
+				/* Verifica se identificou um palíndromo após o laço */
+				if (flag)
+				{
+					printf("Palindromo %s identificado entre [%d][%d] e [%d][%d].\n", palindromo, i, inicio, i, fim);
 				}
 			}
 		}
