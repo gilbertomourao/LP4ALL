@@ -6,6 +6,7 @@
 *.cpp		   text
 *.h            text
 *.hpp		   text
+*.sh		   text
 
 *.dll       binary
 
