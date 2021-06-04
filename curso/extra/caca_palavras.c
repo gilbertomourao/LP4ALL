@@ -122,7 +122,7 @@ void cacapalavras(char *src_file, char *dst_file, char (*palavras)[MAX_SIZE])
 		 * por procstr. Não ignora nenhum caractere e ignora case 
 		 * sensitive. 
 		 */
-		lp.procstr(src, temp_dst, NULL, palavras[it], "todas", "", true);
+		lp.procstr(src, temp_dst, NULL, palavras[it], "LCPS", "", true);
 
 		/* Destaca as ocorrências em dst */
 		for (i = 0; i < src->rows; i++)

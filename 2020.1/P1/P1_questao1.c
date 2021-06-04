@@ -19,9 +19,9 @@ int main()
 	/**
 	 * Ver código fonte da função procpali em linp/src/proc.c
 	 */
-	lp.procpali(src, dst, &palindromos, "linhas", " ", true);
+	lp.procpali(src, dst, &palindromos, "L", " ", true);
 	/**
-	 * Para a turma b, basta substituir linhas por colunas no quarto argumento
+	 * Para a turma b, basta substituir "L" por "C" no quarto argumento
 	 */
 
 	lp.dispmat(dst, "Matriz com Palindromos Identificados");
