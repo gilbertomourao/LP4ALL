@@ -39,7 +39,7 @@ int main()
 	 * str2 destacadas.
 	 */
 	Linp_Word **palavras;
-	lp.procstr(str1, dst, &palavras, str2, "linhas", "", false);
+	lp.procstr(str1, dst, &palavras, str2, "L", "", false);
 
 	lp.dispmat(dst, "Ocorrencias: ");
 
