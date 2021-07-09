@@ -34,12 +34,13 @@ int main()
 	dst->cols = i;
 
 	/* Procura str2 em str1 sem ignorar qualquer 
-	 * caractere e sem ignorar case sensitive. 
+	 * caractere e sem ignorar case sensitive. Também 
+	 * não procura str2 invertida. 
 	 * dst irá armazenar str1 com as ocorrências de 
 	 * str2 destacadas.
 	 */
 	Linp_Word **palavras;
-	lp.procstr(str1, dst, &palavras, str2, "L", "", false);
+	lp.procstr(str1, dst, &palavras, str2, "-L", "", false);
 
 	lp.dispmat(dst, "Ocorrencias: ");
 
@@ -93,20 +94,8 @@ void substitui(Linp_Mat *str1, char *strinv, Linp_Word *palavras)
 	Linp_Word *temp = palavras;
 	while(temp)
 	{
-		/**
-		 * Estou supondo que a palavra invertida não deve 
-		 * ser considerada como uma ocorrência.
-		 */
-		if (temp->x0 > temp->x1) /* palavra invertida */
-		{
-			for (j = temp->x1; j <= temp->x0; j++)
-				str1->data[0][j] = (char) 250;
-		} 
-		else
-		{
-			for (j = temp->x0; j <= temp->x1; j++)
-				str1->data[0][j] = strinv[j - temp->x0];
-		}
+		for (j = temp->x0; j <= temp->x1; j++)
+			str1->data[0][j] = strinv[j - temp->x0];
 		temp = temp->next;
 	}
 
