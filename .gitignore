@@ -3,3 +3,6 @@
 *.zip
 Makefile
 lib/
+**/*.ipynb_checkpoints/
+**/build/
+**/dist/
