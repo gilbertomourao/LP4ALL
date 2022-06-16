@@ -1,3 +1,0 @@
-LIBRARY pylinp.cp38-win_amd64.pyd
-EXPORTS
-PyInit_pylinp
