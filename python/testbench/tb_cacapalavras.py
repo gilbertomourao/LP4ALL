@@ -25,11 +25,10 @@ Procura nas linhas, colunas, diagonais no sentido
 da principal e no sentido da secundária (LCPS), 
 nas duas direções. 
 Não ignora nenhum caractere. 
-Ignora case sensitive. 
+Ignora case sensitive.
+Caracteres não pertencentes às palavras são substituídos por ' '.
 """
-pl.cacapalavras(src = src_file, 
-	dst = dst_file, 
-	palavras = L, 
-	dir = "LCPS", 
-	ignch = "", 
+pl.cacapalavras(src = src_file,
+	dst = dst_file,
+	palavras = L,
 	igncs = True)

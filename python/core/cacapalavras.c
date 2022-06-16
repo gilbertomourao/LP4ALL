@@ -29,7 +29,8 @@
 /**
  * C-function: cacapalavras
  */
-static void cacapalavras(char *src_file, char *dst_file, char **palavras, char *dir, char *ignch, bool igncs)
+static void cacapalavras(char *src_file, char *dst_file, char **palavras, 
+                         char *dir, char *ignch, bool igncs, char subs_ch)
 {
     lp.start(); /* Inicia um bloco LINP */
 
@@ -45,7 +46,7 @@ static void cacapalavras(char *src_file, char *dst_file, char **palavras, char *
 
     for (i = 0; i < src->rows; i++)
         for (j = 0; j < src->cols; j++)
-            dst->data[i][j] = ' ';
+            dst->data[i][j] = subs_ch;
 
     unsigned it = 0; /* iterador */
 
@@ -81,6 +82,10 @@ static void cacapalavras(char *src_file, char *dst_file, char **palavras, char *
  */
 static int ArgCheck_Palavras(PyObject *lista)
 {
+    /* Verifica se o ponteiro é válido */
+    if (lista == NULL)
+        return 0;
+
     /* Verifica se o objeto é uma lista */
     if (!PyList_CheckExact(lista))
         return 0;
@@ -88,6 +93,10 @@ static int ArgCheck_Palavras(PyObject *lista)
     /* Verifica se todos os itens da lista são strings */
     Py_ssize_t list_size = PyList_Size(lista); /* tamanho da lista */
     Py_ssize_t i; /* iterador */
+
+    /* Verifica se é uma lista vazia */
+    if (list_size < 1)
+        return 0;
 
     for (i = 0; i < list_size; i++)
     {
@@ -168,21 +177,22 @@ static char **palavras_as_strings(PyObject *lista_de_palavras)
 PyObject *PyLinp_cacapalavras(PyObject *self, PyObject *args, PyObject *kwargs)
 {
     /* Argumentos esperados */
-    char *src_file;
-    char *dst_file;
-    PyObject *lista_de_palavras; /* Lista de palavras */
-    char *mode; /* modo de busca. Ex: LCPS */
-    char *ign_chars; /* caracteres a serem ignorados */
+    char *src_file = NULL;
+    char *dst_file = NULL;
+    PyObject *lista_de_palavras = NULL; /* Lista de palavras */
+    char *mode = "LCPS"; /* modo de busca. Ex: LCPS */
+    char *ign_chars = ""; /* caracteres a serem ignorados */
     PyObject *py_ign_cs;
-    bool ign_cs = true; /* flag para ignorar case sensitive */
+    bool ign_cs = false; /* flag para ignorar case sensitive */
+    char *subs_ch_str = " ";
 
     /* Valores a serem retornados */
     /* Não retorna valor algum. */
 
-    static char *kwlist[] = {"src", "dst", "palavras", "dir", "ignch", "igncs", NULL};
+    static char *kwlist[] = {"src", "dst", "palavras", "dir", "ignch", "igncs", "ch", NULL};
 
     /* $ : indica que todos os argumentos depois dele são keyword only */
-    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "$ssOssO!", kwlist, &src_file, &dst_file, &lista_de_palavras, &mode, &ign_chars, &PyBool_Type, &py_ign_cs))
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|$ssOssO!s", kwlist, &src_file, &dst_file, &lista_de_palavras, &mode, &ign_chars, &PyBool_Type, &py_ign_cs, &subs_ch_str))
     {
         char *error = "cacapalavras: falha na analise dos argumentos.\n"
                       "A função aceita somente argumentos com a keyword especificada.\n"
@@ -192,8 +202,13 @@ PyObject *PyLinp_cacapalavras(PyObject *self, PyObject *args, PyObject *kwargs)
                       "dst: string contendo o caminho para o arquivo texto de destino.\n"
                       "palavras: lista de palavras que serão procuradas em src.\n"
                       "dir: direção da procura. Ver o atributo __doc__ para mais informações.\n"
+                      "\tvalor padrão: LCPS\n"
                       "ignch: string contendo os caracteres a serem ignorados.\n"
+                      "\tvalor padrão: \"\"\n"
                       "igncs: True ou False. Indica se cacapalavras deve considerar letras maiúsculas e minúsculas como iguais ou diferentes.\n"
+                      "\tvalor padrão: False\n"
+                      "ch: Caractere que substitui todos os outros que não aparecem nas correspondências.\n"
+                      "\tvalor padrão: ' '\n"
                       "\n";
         PyErr_SetString(PyExc_TypeError, error);
         return NULL;
@@ -204,6 +219,13 @@ PyObject *PyLinp_cacapalavras(PyObject *self, PyObject *args, PyObject *kwargs)
         ign_cs = PyObject_IsTrue(py_ign_cs);
     }
 
+    /* Verifica se os argumentos src e dst foram passados */
+    if (src_file == NULL || dst_file == NULL)
+    {
+        PyErr_SetString(PyExc_TypeError, "Os argumentos src e dst devem ser strings e são obrigatórios.");
+        return NULL;
+    }
+
     /* Verifica se o argumento palavras está correto */
     /* palavras deve ser uma lista de strings */
     if (!ArgCheck_Palavras(lista_de_palavras))
@@ -211,6 +233,16 @@ PyObject *PyLinp_cacapalavras(PyObject *self, PyObject *args, PyObject *kwargs)
         PyErr_SetString(PyExc_TypeError, "O argumento palavras deve ser uma lista de strings.");
         return NULL;
     }
+
+    /* Verifica se subs_ch é um caractere (string de 1 char no python) */
+    if (strlen(subs_ch_str) != 1)
+    {
+        PyErr_SetString(PyExc_TypeError, "O argumento ch deve ser um caractere.");
+        return NULL;
+    }
+
+    /* Armazena o caractere em uma variável char para interagir com cacapalavras */
+    char subs_ch = subs_ch_str[0];
 
     /* Tudo ok, cria o vetor de strings */
     char **palavras = palavras_as_strings(lista_de_palavras);
@@ -222,7 +254,7 @@ PyObject *PyLinp_cacapalavras(PyObject *self, PyObject *args, PyObject *kwargs)
     }
 
     /* Chama a função original em C */
-    cacapalavras(src_file, dst_file, palavras, mode, ign_chars, ign_cs);
+    cacapalavras(src_file, dst_file, palavras, mode, ign_chars, ign_cs, subs_ch);
 
     /* Limpa a memória previamente alocada */
     int i = 0;

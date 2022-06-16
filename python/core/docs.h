@@ -29,10 +29,15 @@ dir: direção da procura. Este parametro aceita somente as strings abaixo.\n\
 	O usuario pode inserir o caractere '-' antes da direcao para indicar que \
 nao deseja procurar na sentido oposto (string invertida). Por exemplo:\n\n\
 	\"-LCPS\": procura nas direcoes L, C, P e S, mas nao procura a string invertida.\n\n\
+-------valor padrão: LCPS\n\
 ignch: string contendo os caracteres a serem ignorados.\n\
 	   Para ignorar todos os caracteres não alfabéticos, utilizar a string \"!alfabet\".\n\
 	   Para ignorar todos os caracteres não alfanuméricos, utilizar a string \"!alfanum\".\n\
+-------valor padrão: \"\"\n\
 igncs: True ou False. Indica se cacapalavras deve considerar letras maiúsculas e minúsculas como iguais ou diferentes.\n\
+-------valor padrão: False\n\
+ch: Caractere que substitui todos os outros que não aparecem nas correspondências.\n\
+-------valor padrão: ' '\n\
 \n\
 Exemplo de aplicação:\n\
 \n\
