@@ -29,14 +29,17 @@
 /**
  * C-function: cacapalavras
  */
-static void cacapalavras(char *src_file, char *dst_file, char **palavras, 
+static void cacapalavras(char *src_text, char *dst_text, char **palavras, 
                          char *dir, char *ignch, bool igncs, char subs_ch)
 {
     lp.start(); /* Inicia um bloco LINP */
 
     Linp_Mat *src = lp.criarmat(MAX_SIZE, MAX_SIZE);
+    Linp_Word src_word;
 
-    lp.lerarquivo(src, src_file);
+    src_word.word = src_text;
+
+    lp.wordToMat(src, &src_word);
 
     Linp_Mat *dst = lp.criarmat(src->rows, src->cols);
     Linp_Mat *temp_dst = lp.criarmat(src->rows, src->cols);
@@ -67,8 +70,11 @@ static void cacapalavras(char *src_file, char *dst_file, char **palavras,
         ++it;
     }
 
-    /* Cria o arquivo com a localização das palavras */
-    lp.criararquivo(dst, dst_file);
+    /* Transforma dst para uma string com a localização das palavras */
+    Linp_Word **dst_array;
+    dst_array = lp.matToWord(dst);
+
+    strcpy(dst_text, dst_array[0]->word);
 
     /**
      * Encerra o bloco LINP atual
@@ -177,8 +183,7 @@ static char **palavras_as_strings(PyObject *lista_de_palavras)
 PyObject *PyLinp_cacapalavras(PyObject *self, PyObject *args, PyObject *kwargs)
 {
     /* Argumentos esperados */
-    char *src_file = NULL;
-    char *dst_file = NULL;
+    char *src_text = NULL;
     PyObject *lista_de_palavras = NULL; /* Lista de palavras */
     char *mode = "LCPS"; /* modo de busca. Ex: LCPS */
     char *ign_chars = ""; /* caracteres a serem ignorados */
@@ -187,19 +192,19 @@ PyObject *PyLinp_cacapalavras(PyObject *self, PyObject *args, PyObject *kwargs)
     char *subs_ch_str = " ";
 
     /* Valores a serem retornados */
-    /* Não retorna valor algum. */
+    char *dst_text = NULL;
+    PyObject *py_dst = NULL;
 
-    static char *kwlist[] = {"src", "dst", "palavras", "dir", "ignch", "igncs", "ch", NULL};
+    static char *kwlist[] = {"src", "palavras", "dir", "ignch", "igncs", "ch", NULL};
 
     /* $ : indica que todos os argumentos depois dele são keyword only */
-    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|$ssOssO!s", kwlist, &src_file, &dst_file, &lista_de_palavras, &mode, &ign_chars, &PyBool_Type, &py_ign_cs, &subs_ch_str))
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|$sOssO!s", kwlist, &src_text, &lista_de_palavras, &mode, &ign_chars, &PyBool_Type, &py_ign_cs, &subs_ch_str))
     {
         char *error = "cacapalavras: falha na analise dos argumentos.\n"
                       "A função aceita somente argumentos com a keyword especificada.\n"
                       "Argumentos da função:\n"
                       "\n"
-                      "src: string contendo o caminho para o arquivo texto de referência.\n"
-                      "dst: string contendo o caminho para o arquivo texto de destino.\n"
+                      "src: string contendo o texto de referência.\n"
                       "palavras: lista de palavras que serão procuradas em src.\n"
                       "dir: direção da procura. Ver o atributo __doc__ para mais informações.\n"
                       "\tvalor padrão: LCPS\n"
@@ -220,9 +225,9 @@ PyObject *PyLinp_cacapalavras(PyObject *self, PyObject *args, PyObject *kwargs)
     }
 
     /* Verifica se os argumentos src e dst foram passados */
-    if (src_file == NULL || dst_file == NULL)
+    if (src_text == NULL)
     {
-        PyErr_SetString(PyExc_TypeError, "Os argumentos src e dst devem ser strings e são obrigatórios.");
+        PyErr_SetString(PyExc_TypeError, "O argumento src deve ser uma string e é obrigatório.");
         return NULL;
     }
 
@@ -253,8 +258,17 @@ PyObject *PyLinp_cacapalavras(PyObject *self, PyObject *args, PyObject *kwargs)
         return NULL;
     }
 
+    /* Aloca memória para dst_text */
+    dst_text = malloc((strlen(src_text) + 1)*sizeof(char));
+
+    if (dst_text == NULL)
+    {
+        PyErr_SetString(PyExc_TypeError, "Falha ao alocar memória para char *dst_text.");
+        return NULL;
+    }
+
     /* Chama a função original em C */
-    cacapalavras(src_file, dst_file, palavras, mode, ign_chars, ign_cs, subs_ch);
+    cacapalavras(src_text, dst_text, palavras, mode, ign_chars, ign_cs, subs_ch);
 
     /* Limpa a memória previamente alocada */
     int i = 0;
@@ -266,5 +280,18 @@ PyObject *PyLinp_cacapalavras(PyObject *self, PyObject *args, PyObject *kwargs)
     free(palavras);
 
     /* A função retorna None */
-    Py_RETURN_NONE;
+    /* Py_RETURN_NONE; */
+
+    py_dst = Py_BuildValue("s", dst_text);
+
+    /* Libera a memória alocada para dst_text */
+    free(dst_text);
+
+    if (PyErr_Occurred())
+    {
+        PyErr_SetString(PyExc_TypeError, "Erro inesperado na construção da string de saída da função.");
+        return NULL;
+    }
+
+    return py_dst;
 }

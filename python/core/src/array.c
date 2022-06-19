@@ -205,3 +205,127 @@ static void linp__dispmat(Linp_Mat *array, char *str)
 
 	putchar('\n');
 }
+
+/**
+ * stringToMat
+ * 
+ * Transfora uma string em uma linp_Matrix. 
+ */
+static void linp__wordToMat(Linp_Mat *array, Linp_Word *string)
+{
+	int i, j, cols = 0, strpos = 0;
+	bool eol = false;
+	char ch, flag = ' ';
+	unsigned i_limit = array->rows, j_limit = array->cols;
+
+	for (i = 0; flag!='\0' && i < array->rows;i++)
+	{
+		eol = false;
+		for (j = 0;!eol && j < array->cols;j++)
+		{
+			flag = array->data[i][j] = string->word[strpos++]; 
+
+			if (flag == '\n' || flag == '\0') 
+			{
+				eol = true;
+				break;
+			}
+
+			if (array->data[i][j] == '\n')
+			{
+				eol = true;
+				j--;
+			}
+		}
+
+		if (j > cols) cols = j;
+
+		while (!eol)
+		{
+			ch = string->word[strpos++];
+			if (ch == '\n') eol = true;
+		}
+	}
+
+	array->cols = cols;
+	array->rows = i;
+
+	/*some warnings*/
+	if (array->rows == i_limit || array->cols == j_limit)
+	{
+		printf("\nWARNING: Reached the limit of LINP Linp_Matrix read function. ");
+		printf("The Linp_Matrix on the string may not have been properly read.\n");
+	}
+}
+
+/**
+ * matToString
+ * 
+ * Transfora uma linp_Matrix em uma string. 
+ */
+static Linp_Word **linp__matToWord(Linp_Mat *array)
+{
+	unsigned i, j, strpos = 0;
+
+	/*Cria um array de words para garantir que o word seja incluido no heap de linp*/
+
+	Linp_Word **string_array;
+	unsigned size = 1;
+
+	string_array = malloc((size + 1) * sizeof(Linp_Word *));
+	if (string_array == NULL)
+	{
+		printf("ERRO: Em array. Na funcao matToString. Nao foi possivel alocar memoria para a variavel *string_array.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	/* Inicializa as listas */
+	for (i = 0; i < size; i++)
+	{
+		string_array[i] = malloc(sizeof(Linp_Word));
+
+		if (string_array[i] == NULL)
+		{
+			printf("ERRO: Em array. Na funcao matToString. Nao foi possivel alocar memoria para a variavel string_array[%u].\n", i);
+			exit(EXIT_FAILURE);
+		}
+
+	}
+	string_array[size] = NULL; /* Indica o término do array de listas word */
+
+	/* Adiciona o bloco de memória alocada para o heap atual */
+	Words *new;
+
+	new = malloc(sizeof(Words));
+	if (new == NULL)
+	{
+		printf("ERRO: Em proc. Na funcao pos_array. Nao foi possivel adicionar o novo array de words ao heap.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	new->word_add = string_array;
+	new->next = heap->w;
+	heap->w = new;
+
+	/* A string criada deve ter rows*(cols+1) + 1 espaços, incluindo o '\0'*/
+	Linp_Word *string = string_array[0];
+	string->word = malloc((array->rows*(array->cols + 1) + 1)*sizeof(char));
+
+	if (string->word == NULL)
+	{
+		printf("ERRO: Em array. Na funcao matToString. Nao foi possivel alocar memoria para a variavel string.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	for (i = 0; i < array->rows; i++)
+	{
+		for (j = 0; j < array->cols; j++)
+		{
+			string->word[strpos++] = array->data[i][j];
+		}
+		string->word[strpos++] = '\n';
+	}
+	string->word[strpos] = '\0';
+
+	return string_array;
+}

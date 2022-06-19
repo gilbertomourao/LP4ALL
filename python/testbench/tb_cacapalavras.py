@@ -3,8 +3,11 @@ import pylinp as pl
 #print(pl.cacapalavras.__doc__)
 
 # Arquivos texto
-src_file = 'desafio.txt'
-dst_file = 'gabarito.txt'
+src = open('desafio.txt', 'r')
+src_text = src.read()
+src.close()
+
+print('Texto de entrada: \n\n{}\n\n'.format(src_text))
 
 # Lista de palavras
 L = ['Aterramento',
@@ -28,7 +31,11 @@ Não ignora nenhum caractere.
 Ignora case sensitive.
 Caracteres não pertencentes às palavras são substituídos por ' '.
 """
-pl.cacapalavras(src = src_file,
-	dst = dst_file,
-	palavras = L,
-	igncs = True)
+dst_text = pl.cacapalavras(src = src_text, palavras = L, igncs = True)
+
+print('Texto de saída: \n\n{}\n\n'.format(dst_text))
+
+dst = open('gabarito.txt', 'w')
+dst.write(dst_text)
+dst.close()
+

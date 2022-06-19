@@ -42,6 +42,8 @@ struct linp_namespace lp = {/* heap.c */
 							.lerarquivo = linp__lerarquivo,
 							.criararquivo = linp__criararquivo,
 							.dispmat = linp__dispmat,
+                            .wordToMat = linp__wordToMat, 
+                            .matToWord = linp__matToWord,
 							/* input.c */
 							.input = linp__input,
 							/* proc.c */

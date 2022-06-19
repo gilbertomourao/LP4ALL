@@ -90,6 +90,8 @@ struct linp_namespace
 	void (*lerarquivo)(Linp_Mat *, char *);
 	void (*criararquivo)(Linp_Mat *, char *);
 	void (*dispmat)(Linp_Mat *, char *);
+    void (*wordToMat)(Linp_Mat *, Linp_Word *);
+    Linp_Word **(*matToWord)(Linp_Mat *);
 
 	/* input.c */
 	void (*input)(const char *, const char *, void *, unsigned);

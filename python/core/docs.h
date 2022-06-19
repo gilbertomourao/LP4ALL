@@ -2,13 +2,11 @@
 #define cacapalavras_doc "##########################################\n\
 Função cacapalavras\n\
 \n\
-Procura por palavras em um texto e as destaca em outro arquivo\n\
-de destino.\n\
+Procura por palavras em um texto e as destaca criando um novo texto.\n\
 \n\
 Argumentos:\n\
 \n\
 src: string contendo o caminho para o arquivo texto de referência.\n\
-dst: string contendo o caminho para o arquivo texto de destino.\n\
 palavras: lista de palavras que serão procuradas em src.\n\
 dir: direção da procura. Este parametro aceita somente as strings abaixo.\n\
 	\"L\": procura nas linhas\n\
@@ -43,8 +41,9 @@ Exemplo de aplicação:\n\
 \n\
 import pylinp as pl\n\
 \n\
-src_file = 'desafio.txt'\n\
-dst_file = 'gabarito.txt'\n\
+src = open('desafio.txt', 'r')\n\
+src_text = src.read()\n\
+src.close()\n\
 \n\
 L = ['Aterramento',\n\
 'SPDA',\n\
@@ -57,11 +56,9 @@ L = ['Aterramento',\n\
 'Residencial',\n\
 'Predial']\n\
 \n\
-pl.cacapalavras(src = src_file, \n\
-	dst = dst_file, \n\
-	palavras = L, \n\
-	dir = \"LCPS\", \n\
-	ignch = \"\", \n\
-	igncs = True)\n\
+dst_text = pl.cacapalavras(src = src_text, palavras = L, igncs = True)\n\
 \n\
+dst = open('gabarito.txt', 'w')\n\
+dst.write(dst_text)\n\
+dst.close()\n\
 ##########################################\n"
