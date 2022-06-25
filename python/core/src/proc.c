@@ -272,7 +272,7 @@ static bool strproc(Linp_Mat *array, char *list_ign, bool ign_cs, bool ign_inv,
 				    char *string3, int *sentido, 
 				    unsigned min_len)
 {
-	int i, j, init_i, init_j;
+	int i, j, init_i = 0, init_j = 0;
 	bool flag = false;
 	int aux_sentido;
 
