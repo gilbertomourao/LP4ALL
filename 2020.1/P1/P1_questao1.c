@@ -19,7 +19,7 @@ int main()
 	/**
 	 * Ver código fonte da função procpali em linp/src/proc.c
 	 */
-	lp.procpali(src, dst, &palindromos, "L", " ", true);
+	lp.procpali(src, dst, &palindromos, "L", " ", true, 2);
 	/**
 	 * Para a turma b, basta substituir "L" por "C" no quarto argumento
 	 */

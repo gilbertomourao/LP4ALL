@@ -100,7 +100,7 @@ struct linp_namespace
 	void (*procstr)(Linp_Mat *, Linp_Mat *, Linp_Word ***, 
 					char *, char *, char *, bool);
 	void (*procpali)(Linp_Mat *, Linp_Mat *, Linp_Word ***, 
-					char *, char *, bool);
+					char *, char *, bool, unsigned);
 };
 
 extern struct linp_namespace lp;

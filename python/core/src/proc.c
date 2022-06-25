@@ -218,11 +218,11 @@ static int strequiv(char *str1, char *str2, unsigned size, bool ign_cs, bool ign
  * Retorna 1 se for, 0 caso contrário.
  * 
  */
-static int strpal(char *string, unsigned string_len, bool ign_cs)
+static int strpal(char *string, unsigned string_len, bool ign_cs, unsigned min_len)
 {
 	unsigned i = 0, j;
 
-	if (string_len == 1)
+	if (string_len < min_len)
 		return 0; /*A string deve ter pelo menos dois caracteres*/
 	else 
 		/**
@@ -247,12 +247,12 @@ static int strpal(char *string, unsigned string_len, bool ign_cs)
  * são equivalentes. 
  * Caso str2 = NULL, verifica se str1 é um palíndromo.
  */
-static int strlogic(char *str1, char *str2, unsigned size, bool ign_cs, bool ign_inv)
+static int strlogic(char *str1, char *str2, unsigned size, bool ign_cs, bool ign_inv, unsigned min_len)
 {
 	if (str2)
 		return strequiv(str1, str2, size, ign_cs, ign_inv);
 	else 
-		return strpal(str1, size, ign_cs);
+		return strpal(str1, size, ign_cs, min_len);
 }
 
 /**
@@ -269,9 +269,10 @@ static bool strproc(Linp_Mat *array, char *list_ign, bool ign_cs, bool ign_inv,
 				    int pos_i, int pos_j, int step_i, int step_j,
 				    int *end_i, int *end_j,
 				    char *string1, char *string2, unsigned str2len,
-				    char *string3, int *sentido)
+				    char *string3, int *sentido, 
+				    unsigned min_len)
 {
-	int i, j, init_i = 0, init_j = 0;
+	int i, j, init_i, init_j;
 	bool flag = false;
 	int aux_sentido;
 
@@ -392,7 +393,7 @@ static bool strproc(Linp_Mat *array, char *list_ign, bool ign_cs, bool ign_inv,
 			/* sentido = 1 se string1 = string2 ou se string1 for um palindromo */
 			/* sentido = -1 se string1 e string2 forem simétricas */
 			/* sentido = 0 caso contrário */
-			aux_sentido = strlogic(string1, string2, size, ign_cs, ign_inv);
+			aux_sentido = strlogic(string1, string2, size, ign_cs, ign_inv, min_len);
 			if (aux_sentido)
 			{
 				if (!ignorac(list_ign, array->data[i][j]))
@@ -493,7 +494,8 @@ static void proclin(Linp_Mat *array,
 					Linp_Word **pos, 
 					char *list_ign, bool ign_cs, bool ign_inv, 
 					char *string1, char *string2, unsigned str2len, 
-					char *string3)
+					char *string3, 
+					unsigned min_len)
 {
 	int i, j;
 	int end_i, end_j, last_end;
@@ -510,7 +512,7 @@ static void proclin(Linp_Mat *array,
 			 */
 			if (strproc(array, list_ign, ign_cs, ign_inv,  
 					i, j, 0, 1, &end_i, &end_j, 
-					string1, string2, str2len, string3, &sentido) && end_j > last_end)
+					string1, string2, str2len, string3, &sentido, min_len) && end_j > last_end)
 			{
 				*pos = insere_word(*pos, j, end_j, i, end_i, string3, sentido);
 
@@ -528,7 +530,8 @@ static void proccol(Linp_Mat *array,
 					Linp_Word **pos, 
 					char *list_ign, bool ign_cs, bool ign_inv, 
 					char *string1, char *string2, unsigned str2len, 
-					char *string3)
+					char *string3, 
+					unsigned min_len)
 {
 	int i, j;
 	int end_i, end_j, last_end;
@@ -545,12 +548,12 @@ static void proccol(Linp_Mat *array,
 			 */
 			if (strproc(array, list_ign, ign_cs, ign_inv, 
 					i, j, 1, 0, &end_i, &end_j, 
-					string1, string2, str2len, string3, &sentido) && end_i > last_end)
+					string1, string2, str2len, string3, &sentido, min_len) && end_i > last_end)
 			{
 				*pos = insere_word(*pos, j, end_j, i, end_i, string3, sentido);
 
 				/*Salva a posição final para a lógica do palíndromo*/
-				last_end = end_j;
+				last_end = end_i;
 			}
 		}
 	}
@@ -563,7 +566,8 @@ static void procdiP(Linp_Mat *array,
 					Linp_Word **pos, 
 					char *list_ign, bool ign_cs, bool ign_inv, 
 					char *string1, char *string2, unsigned str2len, 
-					char *string3)
+					char *string3, 
+					unsigned min_len)
 {
 	int i, j, k, l;
 	int end_i, end_j, last_end_i, last_end_j;
@@ -584,7 +588,7 @@ static void procdiP(Linp_Mat *array,
 				 */
 				if (strproc(array, list_ign, ign_cs, ign_inv, 
 						k, l, 1, 1, &end_i, &end_j, 
-						string1, string2, str2len, string3, &sentido) && end_i > last_end_i && end_j > last_end_j)
+						string1, string2, str2len, string3, &sentido, min_len) && end_i > last_end_i && end_j > last_end_j)
 				{
 					*pos = insere_word(*pos, l, end_j, k, end_i, string3, sentido);
 
@@ -604,7 +608,8 @@ static void procdiS(Linp_Mat *array,
 					Linp_Word **pos, 
 					char *list_ign, bool ign_cs, bool ign_inv, 
 					char *string1, char *string2, unsigned str2len, 
-					char *string3)
+					char *string3, 
+					unsigned min_len)
 {
 	int i, j, k, l;
 	int end_i, end_j, last_end_i, last_end_j;
@@ -626,7 +631,7 @@ static void procdiS(Linp_Mat *array,
 				 */
 				if (strproc(array, list_ign, ign_cs, ign_inv, 
 						k, l, 1, -1, &end_i, &end_j, 
-						string1, string2, str2len, string3, &sentido) && end_i > last_end_i && end_j < last_end_j)
+						string1, string2, str2len, string3, &sentido, min_len) && end_i > last_end_i && end_j < last_end_j)
 				{
 					*pos = insere_word(*pos, l, end_j, k, end_i, string3, sentido);
 
@@ -713,7 +718,7 @@ static Linp_Word **pos_array(unsigned size)
  * lp.proc(grid, palindromos, NULL, "todas", "!alfanum", 1);
  * 
  */
-static void kernelproc(Linp_Mat *array, Linp_Word ***pos, char *string, char *dir, char *ign_chars, bool ign_cs)
+static void kernelproc(Linp_Mat *array, Linp_Word ***pos, char *string, char *dir, char *ign_chars, bool ign_cs, unsigned min_len)
 {
 	/**
 	 * Prepara a lista de caracteres a serem ignorados, a string 
@@ -764,22 +769,22 @@ static void kernelproc(Linp_Mat *array, Linp_Word ***pos, char *string, char *di
 		{
 			case 'L':
 			{
-				proclin(array, &pos[0][i], ignorar, ign_cs, ign_inv, string1, string_aux, strauxlen, string3);
+				proclin(array, &pos[0][i], ignorar, ign_cs, ign_inv, string1, string_aux, strauxlen, string3, min_len);
 				break;
 			}
 			case 'C':
 			{
-				proccol(array, &pos[0][i], ignorar, ign_cs, ign_inv, string1, string_aux, strauxlen, string3);
+				proccol(array, &pos[0][i], ignorar, ign_cs, ign_inv, string1, string_aux, strauxlen, string3, min_len);
 				break;
 			}
 			case 'P':
 			{
-				procdiP(array, &pos[0][i], ignorar, ign_cs, ign_inv, string1, string_aux, strauxlen, string3);
+				procdiP(array, &pos[0][i], ignorar, ign_cs, ign_inv, string1, string_aux, strauxlen, string3, min_len);
 				break;
 			}
 			case 'S':
 			{
-				procdiS(array, &pos[0][i], ignorar, ign_cs, ign_inv, string1, string_aux, strauxlen, string3);
+				procdiS(array, &pos[0][i], ignorar, ign_cs, ign_inv, string1, string_aux, strauxlen, string3, min_len);
 				break;
 			}
 			default:
@@ -926,7 +931,8 @@ static void destacadiagS(Linp_Mat *src, Linp_Mat *dst, Linp_Word *posicoes)
  * através de dst.
  */
 static void proc(Linp_Mat *src, Linp_Mat *dst, Linp_Word ***words, 
-				 char *string, char *dir, char *ign_chars, bool ign_cs)
+				 char *string, char *dir, char *ign_chars, bool ign_cs, 
+				 unsigned min_len)
 {
 	/* Verifica se está dentro de um bloco LINP */
 	if (words && heap_count == 0)
@@ -941,7 +947,7 @@ static void proc(Linp_Mat *src, Linp_Mat *dst, Linp_Word ***words,
 	/* Procura pelas ocorrências */
 	Linp_Word **posicoes;
 
-	kernelproc(src, &posicoes, string, dir, ign_chars, ign_cs);
+	kernelproc(src, &posicoes, string, dir, ign_chars, ign_cs, min_len);
 
 	if (dst)
 	{
@@ -1065,7 +1071,8 @@ static void linp__procstr(Linp_Mat *src, Linp_Mat *dst, Linp_Word ***words,
 		exit(EXIT_FAILURE);
 	}
 
-	proc(src, dst, words, string, dir, ign_chars, ign_cs);
+	/* Chama proc com min_len = 0, uma vez que nesse caso o parâmetro é irrelevante */
+	proc(src, dst, words, string, dir, ign_chars, ign_cs, 0);
 }
 
 /**
@@ -1074,7 +1081,8 @@ static void linp__procstr(Linp_Mat *src, Linp_Mat *dst, Linp_Word ***words,
  * Função que destaca os palíndromos em src.
  */
 static void linp__procpali(Linp_Mat *src, Linp_Mat *dst, Linp_Word ***words,
-				    	   char *dir, char *ign_chars, bool ign_cs)
+				    	   char *dir, char *ign_chars, bool ign_cs, 
+				    	   unsigned min_len)
 {
 	char error_msg[235] = "\0";
 	bool error_flag = false;
@@ -1106,5 +1114,5 @@ static void linp__procpali(Linp_Mat *src, Linp_Mat *dst, Linp_Word ***words,
 	}
 
 	/* Chama proc com string = NULL para procurar por palíndromos */
-	proc(src, dst, words, NULL, dir, ign_chars, ign_cs);
+	proc(src, dst, words, NULL, dir, ign_chars, ign_cs, min_len);
 }
