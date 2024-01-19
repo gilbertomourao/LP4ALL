@@ -290,6 +290,8 @@ static Linp_Word **linp__matToWord(Linp_Mat *array)
 			exit(EXIT_FAILURE);
 		}
 
+		string_array[i]->next = NULL; /* Insere um ponto de parada */
+
 	}
 	string_array[size] = NULL; /* Indica o término do array de listas word */
 
@@ -325,7 +327,7 @@ static Linp_Word **linp__matToWord(Linp_Mat *array)
 		}
 		string->word[strpos++] = '\n';
 	}
-	string->word[strpos] = '\0';
+	string->word[strpos-1] = '\0';
 
 	return string_array;
 }

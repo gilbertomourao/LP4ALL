@@ -47,6 +47,9 @@ typedef struct linp__mat
  * Struct que guarda as coordenadas do início e do fim 
  * de uma palavra em Linp_Mat. 
  * (x0, y0) --> (x1, y1)
+ * 
+ * Funciona como lista encadeada para guardar diversas 
+ * ocorrências da mesma palavra. 
  */
 typedef struct linp__word
 {
