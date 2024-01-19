@@ -187,7 +187,7 @@ PyObject *PyLinp_cacapalavras(PyObject *self, PyObject *args, PyObject *kwargs)
     PyObject *lista_de_palavras = NULL; /* Lista de palavras */
     char *mode = "LCPS"; /* modo de busca. Ex: LCPS */
     char *ign_chars = ""; /* caracteres a serem ignorados */
-    PyObject *py_ign_cs;
+    PyObject *py_ign_cs = NULL;
     bool ign_cs = false; /* flag para ignorar case sensitive */
     char *subs_ch_str = " ";
 
